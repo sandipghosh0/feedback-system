@@ -1,0 +1,23 @@
+create database college;
+use college;
+create table admin(aduname varchar(30),adid varchar(30) primary key,adpw varchar(30));
+create table login(uname varchar(30),pw varchar(30));
+create table dept(dname varchar(30),did varchar(30), primary key(did));
+create table subject(subid varchar(30) primary key,subname varchar(30),tid varchar(30),foreign key(tid) references  teacher(tid));
+create table teacher(tname varchar(30),tid varchar(30) primary key,tuname varchar(30),tpw varchar(30),did varchar(30), foreign key(did)  references dept(did));
+create table feedback(did varchar(30),tid varchar(30),subid varchar(30),roll varchar(30),comm varchar(30),ability varchar(30),present varchar(30),teaching varchar(30),interest varchar(30),regular varchar(30),discipline varchar(30),attitude varchar(30),foreign key(did) references dept(did),foreign key(roll) references student(roll),foreign key(tid) references teacher(tid),foreign key(subid) references subject(subid));
+create table student(roll varchar(30) primary key,sname varchar(30),suname varchar(30),spw varchar (30),did varchar(30),foreign key(did) references dept(did));
+
+insert into admin values("ram",1,"ramji");
+insert into feedback values("5","12","90","3",1,3,2,2,3,1,4,2);
+select * from teacher ; 
+drop table feedback;
+alter table teacher add column dname varchar(30);
+select tid,avg(comm) as AvgComm,avg(ability) as AvgAbility,avg(present) as AvgPresent,avg(teaching) as AvgTeaching,avg(interest) as AvgInterest,avg(regular) as AvgRegular,avg(discipline) as AvgDiscipline,avg(attitude) as AvgAttitude from feedback where tid=13;
+select * from feedback where tid=+tid;
+update admin set adpw="xyz" where adid='3';
+select  * from feedback,teacher,dept,subject  where feedback.did=dept.did && feedback.tid=teacher.tid && feedback.subid=subject.subid;
+select feedback.*,teacher.*,dept.*,subject.* from feedback,teacher,dept,subject;
+select feedback.*,teacher.* from feedback,teacher where feedback.tid = "12" && tuname="nelson" && tpw="jio";
+set foreign_key_checks=0;
+delete from teacher where tname="nelson varte" and did="7";
